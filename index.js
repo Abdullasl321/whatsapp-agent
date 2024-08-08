@@ -180,70 +180,32 @@ async function startBot() {
             let m = smsg(client, mek, store);
 
             const mbody = m.body;
+            
            
             if (mbody) {
-                const Time = new Date().getTime();
-                const User = mek.key.remoteJid;
-                let UserName;
-                let Chat;
+                const HH = new Date().getHours();
+                const MM = new Date().getMinutes();
+                let Greeting;
 
-                if (mek.key.fromMe === true){
-                    UserName = client.user.name;
-
+                if (HH > 0 && HH < 12){
+                    Greeting = 'GOOD MORNING';
+                } else if (HH > 12 && HH < 16){
+                    Greeting = 'GOOD AFTERNOON';
+                } else if (HH > 16 && HH < 20){
+                    Greeting = 'GOOD EVENING';
+                } else if (HH > 20 && HH < 24){
+                    Greeting = 'GOOD NIGHT';
                 } else {
-                    UserName = mek.verifiedBizName;
-
+                    Greeting = 'GOOD MORNING';
                 }
 
-                console.log(Time + '\n' + User + '\n' + UserName + '\n' + mbody + '\n\n');
-            
-                // Extract numbers from User (remoteJid)
-                const userRemoteJidNumbersOnly = User.replace(/\D/g, '');
-            
-                // Create the directory if it doesn't exist
-                const dir = path.join(__dirname, 'data', 'chats');
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir, { recursive: true });
-                }
-            
-                // Define the path for the JSON file
-                const filePath = path.join(dir, `${userRemoteJidNumbersOnly}.json`);
-            
-                // Create the new message data
-                const newMessage = {
-                    Time: Time,
-                    User: User,
-                    UserName: UserName,
-                    Message: mbody
-                };
-            
-                // Initialize chatData as an empty array
-                let chatData = [];
-            
-                // Read the existing data from the file (if it exists)
-                if (fs.existsSync(filePath)) {
-                    try {
-                        const existingData = fs.readFileSync(filePath);
-                        chatData = JSON.parse(existingData);
-                        // Ensure chatData is an array
-                        if (!Array.isArray(chatData)) {
-                            chatData = [];
-                        }
-                    } catch (error) {
-                        console.error('Error reading or parsing existing data:', error);
+                client.sendMessage(mek.key.remoteJid, '```A R - A B D U L L A - D E V```\n\n' + Greeting + ` ${mek.verifiedBizName}` + ',\nHow Can I Help you Sir/Madam 🤔\n\n *< AUTOMATED MSG >*');
+                client.sendMessage(mek.key.remoteJid, {
+                    react: {
+                        text: "🤗", // use an empty string to remove the reaction
+                        key: message.key
                     }
-                }
-            
-                // Append the new message data to the existing data
-                chatData.push(newMessage);
-            
-                // Write the updated data back to the file
-                try {
-                    fs.writeFileSync(filePath, JSON.stringify(chatData, null, 2));
-                    console.log(`Data appended to ${filePath}`);
-                } catch (error) {
-                    console.error('Error writing data to file:', error);
-                }
+                })
             }
 
         } catch (err) {
@@ -415,3 +377,18 @@ fs.watchFile(file, () => {
     delete require.cache[file];
     require(file);
 });
+
+const app = express()
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send(`
+    
+    <h1>HOLA!</h1>
+    
+    `);
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
