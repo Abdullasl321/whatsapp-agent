@@ -1,0 +1,24 @@
+{
+  "name": "arabdullah882",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.7.5",
+    "axios": "^1.7.3",
+    "chalk": "^2.4.0",
+    "express": "^4.19.2",
+    "path": "^0.12.7",
+    "pino": "^9.3.2",
+    "qrcode-terminal": "^0.12.0",
+    "readline": "^1.3.0",
+    "ytdl-core": "^4.11.5"
+  }
+}
